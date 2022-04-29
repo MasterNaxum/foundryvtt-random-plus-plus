@@ -3,11 +3,7 @@
   "title": "Random++",
   "description": "Slightly changes pseudo-random number generation in mysterious ways.",
   "version": "0.0.1",
-  "authors": [
-    {
-      "name": "@MasterNaxum"
-    }
-  ],
+  "author": "MasterNaxum",
   "dependencies": [
     {
         "name": "lib-wrapper"
