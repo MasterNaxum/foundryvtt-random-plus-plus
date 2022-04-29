@@ -1,0 +1,12 @@
+{
+  "RANDOM-PLUS-PLUS": {
+    "settings": {
+	  "method": {
+		"Name": "RNG Method",
+		"Hint": "Controls which RNG method to use (client side only).",
+		"OptionOriginal": "Original",
+		"OptionReseed": "Reseed"
+	  }
+	}
+  }
+}
