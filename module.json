@@ -2,7 +2,7 @@
   "name": "random-plus-plus",
   "title": "Random++",
   "description": "Slightly changes pseudo-random number generation in mysterious ways.",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "author": "MasterNaxum",
   "dependencies": [
     {
