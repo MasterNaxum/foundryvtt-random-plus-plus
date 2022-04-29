@@ -47,7 +47,7 @@ class RandomPPModule {
 	static NewSeed() {
 		if(twist)
 		{
-			twist.seed(twist.int() ^ Date.now() & 4294967296 );
+			twist.seed(twist.int() ^ (Date.now() & 4294967295) );
 		}
 	}
 	
@@ -77,7 +77,7 @@ Hooks.once('ready', () => {
 	
 	libWrapper.register('random-plus-plus', 'MersenneTwister.prototype.int', function (wrapped, ...args) {
 		let result = wrapped(...args);
-		if(!RandomPPModule.useNewMethod) this.seed(result ^ (Date.now() & 4294967296))
+		if(!RandomPPModule.useNewMethod) this.seed(result ^ (Date.now() & 4294967295))
 		return result;
 	}, 'WRAPPER');
 });
