@@ -27,6 +27,6 @@
   "minimumCoreVersion": "0.8.0",
   
   "url": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus",
-  "manifest": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus/edit/main/module.json",
+  "manifest": "https://raw.githubusercontent.com/MasterNaxum/foundryvtt-random-plus-plus/main/module.json",
   "download": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus/archive/refs/tags/0.0.1.zip"
 }
