@@ -24,5 +24,9 @@
     "scripts/random-plus-plus.js"
   ],
   "version": "1",
-  "minimumCoreVersion": "0.8.0"
+  "minimumCoreVersion": "0.8.0",
+  
+  "url": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus",
+  "manifest": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus/edit/main/module.json",
+  "download": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus/archive/refs/tags/0.0.1.zip"
 }
