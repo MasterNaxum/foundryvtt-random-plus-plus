@@ -5,7 +5,7 @@
   "author": "MasterNaxum",
   "url": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus",
   "flags": {},
-  "version": "1.0.1",
+  "version": "1.0.2",
   "minimumCoreVersion": "0.6.5",
   "compatibleCoreVersion": "0.8.9",
   "scripts": [
