@@ -5,7 +5,7 @@
   "author": "MasterNaxum",
   "url": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus",
   "flags": {},
-  "version": "1.0.0",
+  "version": "1.0.1",
   "minimumCoreVersion": "0.6.5",
   "compatibleCoreVersion": "0.8.9",
   "scripts": [
@@ -31,7 +31,7 @@
   ],
   "socket": false,
   "manifest": "https://raw.githubusercontent.com/MasterNaxum/foundryvtt-random-plus-plus/main/module.json",
-  "download": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus/archive/refs/tags/0.0.3.zip",
+  "download": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus/archive/refs/tags/1.0.1.zip",
   "protected": false,
   "coreTranslation": false,
   "library": false
