@@ -1,12 +1,28 @@
 {
-  "RANDOM-PLUS-PLUS": {
-    "settings": {
-	  "method": {
-		"Name": "RNG Method",
-		"Hint": "Controls which RNG method to use (client side only).",
-		"OptionOriginal": "Original",
-		"OptionReseed": "Reseed"
-	  }
+	"RANDOM-PLUS-PLUS": {
+		"messages": {
+			"init-start": "%c > Random++ %c Initializing...",
+			"init-failed-missing-lw": "%c > Random++ %c Initialization failed: libWrapper module was not found on init hook.",
+			"init-success": "%c > Random++ %c Initialized!",
+			"init-failed-missing-lw-gm": "The Random++ module requires the libWrapper module. Please install and activate it.",
+			"ready-success": "%c > Random++ %c Ready!",
+			"fire-init-hook": "%c > Random++ %c Firing init hook.",
+			"fire-ready-hook": "%c > Random++ %c Firing ready hook."
+		},
+		"settings": {
+			"method": {
+				"Name": "RNG Method",
+				"Hint": "(Client) Which RNG method to use. Check the module's documentation for details.",
+				"OptionOriginal": "Mersenne Twister (Original)",
+				"OptionReseedAfter": "Mersenne - Reseed after every roll",
+				"OptionReseedBefore": "Mersenne - Reseed before every roll",
+				"OptionRemoteANUBulk" : "Quantum RNG - Bulk (qrng.anu.edu.au)",
+				"OptionRemoteANUSingle" : "(EXPERIMENTAL) Remote Quantum RNG - Single (qrng.anu.edu.au)"
+			},
+			"bulk-size": {
+					"Name" : "Quantum RNG Buffer",	
+					"Hint" : "(Client) (QRNG Bulk only) Tries to keep at least these many rolls ready in memory at all times."
+			}
+		}
 	}
-  }
 }
