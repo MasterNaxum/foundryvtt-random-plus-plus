@@ -1,38 +1,43 @@
 {
-  "name": "random-plus-plus",
-  "title": "Random++",
-  "description": "Slightly changes pseudo-random number generation in mysterious ways.",
-  "author": "MasterNaxum",
-  "url": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus",
-  "flags": {},
-  "version": "1.0.3",
-  "minimumCoreVersion": "0.6.5",
-  "compatibleCoreVersion": "0.8.9",
-  "scripts": [
-    "scripts/random-plus-plus.js"
-  ],
-  "esmodules": [],
-  "styles": [],
-  "languages": [
-    {
-      "lang": "en",
-      "name": "English",
-      "path": "languages/en.json"
-    }
-  ],
-  "packs": [],
-  "system": [],
-  "dependencies": [
-    {
-        "name": "lib-wrapper",
-		"type": "module",
-		"manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/download/v1.0.8.0/module.json"
-    }
-  ],
-  "socket": false,
-  "manifest": "https://raw.githubusercontent.com/MasterNaxum/foundryvtt-random-plus-plus/main/module.json",
-  "download": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus/archive/refs/tags/1.0.3.zip",
-  "protected": false,
-  "coreTranslation": false,
-  "library": false
+	"name": "random-plus-plus",
+	"title": "Random++",
+	"description": "Slightly changes pseudo-random number generation in mysterious ways.",
+	"author": "MasterNaxum",
+	"url": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus",
+	"flags": {},
+	"version": "1.0.4",
+	"minimumCoreVersion": "0.6.5",
+	"compatibleCoreVersion": "0.8.9",
+	"scripts": [
+		"scripts/random-plus-plus.js"
+	],
+	"esmodules": [],
+	"styles": [],
+	"languages": [
+		{
+			"lang": "en",
+			"name": "English",
+			"path": "languages/en.json"
+		},
+		{
+			"lang": "es",
+			"name": "Spanish",
+			"path": "languages/es.json"
+		}
+	],
+	"packs": [],
+	"system": [],
+	"dependencies": [
+		{
+			"name": "lib-wrapper",
+			"type": "module",
+			"manifest": "https://github.com/ruipin/fvtt-lib-wrapper/releases/download/v1.0.8.0/module.json"
+		}
+	],
+	"socket": false,
+	"manifest": "https://raw.githubusercontent.com/MasterNaxum/foundryvtt-random-plus-plus/main/module.json",
+	"download": "https://github.com/MasterNaxum/foundryvtt-random-plus-plus/archive/refs/tags/1.0.4.zip",
+	"protected": false,
+	"coreTranslation": false,
+	"library": false
 }

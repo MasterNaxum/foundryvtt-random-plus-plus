@@ -1,0 +1,29 @@
+{
+	"RANDOM-PLUS-PLUS": {
+		"messages": {
+			"init-start": "%c > Random++ %c Inicializando...",
+			"init-failed-missing-lw": "%c > Random++ %c Inicialización fallida: El módulo libWrapper no se encontró en el hook de inicio.",
+			"init-success": "%c > Random++ %c ¡Inicializado!",
+			"init-failed-missing-lw-gm": "El módulo Random++ requiere el módulo libWrapper. Por favor instale y active libWrapper.",
+			"ready-success": "%c > Random++ %c ¡Preparado!",
+			"fire-init-hook": "%c > Random++ %c Disparando hook de inicialización.",
+			"fire-ready-hook": "%c > Random++ %c Disparando hook de preparación."
+		},
+		"settings": {
+			"method": {
+				"Name": "Método de RNG",
+				"Hint": "(Cliente) Qué método de generación de números aleatorios usar. Comprueba la documentación del módulo para más detalles.",
+				"OptionOriginal": "Mersenne Twister (Original)",
+				"OptionReseedAfter": "Mersenne - Resembrar tras cada tirada",
+				"OptionReseedBefore": "Mersenne - Resembrar antes de cada tirada",
+				"JavascriptMathRandom" : "Javascript - Math.random (dependiente del navegador)",
+				"OptionRemoteANUBulk" : "RNG Cuántico - Petición múltiple (qrng.anu.edu.au)",
+				"OptionRemoteANUSingle" : "(EXPERIMENTAL) RNG Cuántico - Petición singular (qrng.anu.edu.au)"
+			},
+			"bulk-size": {
+					"Name" : "Buffer de RNG Cuántico",
+					"Hint" : "(Cliente) (RNG Cuántico - Petición múltiple) Intenta mantener como mínimo esta cantidad de números listos en memoria en todo momento."
+			}
+		}
+	}
+}

@@ -16,11 +16,12 @@
 				"OptionOriginal": "Mersenne Twister (Original)",
 				"OptionReseedAfter": "Mersenne - Reseed after every roll",
 				"OptionReseedBefore": "Mersenne - Reseed before every roll",
+				"JavascriptMathRandom" : "Javascript - Math.random (browser dependent)",
 				"OptionRemoteANUBulk" : "Quantum RNG - Bulk (qrng.anu.edu.au)",
-				"OptionRemoteANUSingle" : "(EXPERIMENTAL) Remote Quantum RNG - Single (qrng.anu.edu.au)"
+				"OptionRemoteANUSingle" : "(EXPERIMENTAL) Quantum RNG - Single (qrng.anu.edu.au)"
 			},
 			"bulk-size": {
-					"Name" : "Quantum RNG Buffer",	
+					"Name" : "Quantum RNG Buffer",
 					"Hint" : "(Client) (QRNG Bulk only) Tries to keep at least these many rolls ready in memory at all times."
 			}
 		}

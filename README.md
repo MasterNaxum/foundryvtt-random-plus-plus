@@ -1,16 +1,21 @@
-
 # Random++
+[English](https://github.com/MasterNaxum/foundryvtt-random-plus-plus/blob/main/README.md)  |  [Spanish](https://github.com/MasterNaxum/foundryvtt-random-plus-plus/blob/main/README.es.md)
+
 Slightly changes pseudo-random number generation in mysterious ways.
 
 This FoundryVTT Module gives clients slightly different options to alter their Random Number Generation. It does so by modifying the `int()` method of the MersenneTwister's class definition (used to generate random numbers). The method's intent is to return a 32 bit number (between 0 and 2^32-1), which is then used by the implementation in all other rng related queries of the application (mainly, rolling dice).
 
-The options available are as follow.
+Use the following manifest to install the latest version:
+
+    https://raw.githubusercontent.com/MasterNaxum/foundryvtt-random-plus-plus/main/module.json
+
+The options available are as follow.  
 
 ## Mersenne Twister (Original)
 Makes no changes to the RNG generation. This is the default value. Uses the Mersenne Twister implementation of FoundryVTT.
 
 ## Mersenne - Reseed after every roll
-This option will take the intended result calculated by the Mersenne Twister, and before returning it, it will re-seed the twister. 
+This option will take the intended result calculated by the Mersenne Twister, and before returning it, it will re-seed the twister.
 
 The new seed is the XOR of the last 32 bits of `Date.now()` (time of the roll) and the result that is actually returned.
 
@@ -25,8 +30,16 @@ The new seed is the XOR of the last 32 bits of `Date.now()` (time of the roll) a
 **Why use this?**
 Reseeding before every roll using a random seed that originates from the current time of the roll and the already arbitrary last roll should make the new roll less "predictable", since it will be dependant on the exact time the roll took place.
 
+## Javascript - Math.random
+This option will use the current javascript implementation of the Math.random method to determine the next random result. 
+
+Most browsers have an implementation of [Xorshift128+](https://en.wikipedia.org/wiki/Xorshift#xorshift.2B) for their Math.random method definition.
+
+**Why use this?**
+This is an alternative that ignores the Mersenne algorythm altogether and instead uses the browser's choice of implementing randomness. Mersenne Twister has failed in some statistical tests in the past whereas Xorshift has passed. Both methods have pros and cons and Xorshift is an alternative to Mersenne that is popular enough of a choice to end up in most browsers.
+
 ## Quantum RNG - Bulk (qrng.anu.edu.au)
-This option will skip using the Mersenne Twister for the most part, leaving the RNG generation to making requests to the website https://qrng.anu.edu.au/. 
+This option will skip using the Mersenne Twister for the most part, leaving the RNG generation to making requests to the website https://qrng.anu.edu.au/.
 
 It will save a number of values that originate from quantum readings at the **Centre for Quantum Computing and Communication Technology** of **The Australian National University** at **Canberra**.
 
@@ -37,4 +50,5 @@ Reading quantum fluctuations is theoretically more random than any pseudo-random
 
 Detaching the RNG generation from the client is also arguably better.
 
-*NOTE: This will expose the N next results to the client, but in the future, this module will implement an option to ask for every single individual roll as part of an asynchronous request.*
+<font color="red">**WARNING!**</font>
+The QRNG project is migrating to a paid service hosted on Amazon Web Services https://quantumnumbers.anu.edu.au/ and have announced that their public API is to be scaled back and retired. I have not found a suitable replacement that is free and open and requires no authentication like their original API. If you do, please leave that knowledge somewhere in the repo.

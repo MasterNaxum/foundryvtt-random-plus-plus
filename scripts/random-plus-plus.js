@@ -36,6 +36,7 @@ class RandomPPModule
 			"original": `RANDOM-PLUS-PLUS.settings.${this.SETTINGS.METHOD}.OptionOriginal`,
 			"reseed": `RANDOM-PLUS-PLUS.settings.${this.SETTINGS.METHOD}.OptionReseedAfter`,
 			"reseed-before": `RANDOM-PLUS-PLUS.settings.${this.SETTINGS.METHOD}.OptionReseedBefore`,
+			"js-math-random": `RANDOM-PLUS-PLUS.settings.${this.SETTINGS.METHOD}.JavascriptMathRandom`,
 			"remote-anu-bulk": `RANDOM-PLUS-PLUS.settings.${this.SETTINGS.METHOD}.OptionRemoteANUBulk`
 		};
 		
@@ -103,6 +104,9 @@ class RandomPPModule
 			case "reseed-before":
 				RandomPPModule.method = method;
 			break;
+			case "js-math-random":
+				RandomPPModule.method = method;
+			break;
 			case "remote-anu-bulk":
 				RandomPPModule.method = method;
 				RandomPPModule.bulkSize = game.settings.get(RandomPPModule.ID, RandomPPModule.SETTINGS.BULKSIZE);
@@ -131,44 +135,73 @@ class RandomPPModule
 		return "color:#FFFFFF; background-image: linear-gradient(#0000DD, #000088); font-weight: bold; border: 0.1vh solid white; border-radius: 0.5vh; padding: 0.5vh; box-shadow: 0px 0px 1vh black;";
 	}
 	
-	static RequestSingleRNG(fallbackResult = 0){
+	static RequestSingleRNG(){
 		if(!!RandomPPModule.RemoteRequestInProgress) return;
 		var remoteRequest = new XMLHttpRequest();
 		remoteRequest.open("GET", "https://qrng.anu.edu.au/API/jsonI.php?length=1&type=hex16&size=4", false);
 		remoteRequest.send(null);
 		let response = JSON.parse(remoteRequest.response);
-		return (remoteRequest.status === 200 && response.success) ? response.data[0] : fallbackResult;
+		return (remoteRequest.status === 200 && response.success) ? parseInt(response.data[0], 16) >>> 0 : undefined;
 	}
 	
 	static RequestRemoteRNGResults(){
 		if(!!RandomPPModule.RemoteRequestInProgress) return;
-		var remoteRequest = new XMLHttpRequest();
-		remoteRequest.open("GET", `https://qrng.anu.edu.au/API/jsonI.php?length=${RandomPPModule.bulkSize}&type=hex16&size=4`, true);
-		remoteRequest.onload = function (e) {
-			if (remoteRequest.readyState === 4) {
-				if (remoteRequest.status === 200) {
-					let response = JSON.parse(remoteRequest.response);
-					if(!response.success)
-					{
-						RemoteRequestInProgress = false;
-						return;
+		RandomPPModule.RemoteRequestInProgress = true;
+		try
+		{
+			var remoteRequest = new XMLHttpRequest();
+			remoteRequest.open("GET", `https://qrng.anu.edu.au/API/jsonI.php?length=${RandomPPModule.bulkSize}&type=hex16&size=4`, true);
+			remoteRequest.onload = function (e) {
+				if (remoteRequest.readyState === 4) {
+					if (remoteRequest.status === 200) {
+						let response = JSON.parse(remoteRequest.response);
+						if(!response.success)
+						{
+							RemoteRequestInProgress = false;
+							return;
+						}
+						let toAdd = [];
+						response.data.forEach( x => { toAdd.push(parseInt(x, 16) >>> 0); });
+						RandomPPModule.u32RandomArray.push(...toAdd);
+					} else {
+						console.error(remoteRequest.statusText);
 					}
-					let toAdd = [];
-					response.data.forEach( x => { toAdd.push(parseInt(x, 16) >>> 0); });
-					RandomPPModule.u32RandomArray.push(...toAdd);
-				} else {
-					console.error(remoteRequest.statusText);
+				RandomPPModule.RemoteRequestInProgress = false;
 				}
+			};
+			remoteRequest.onerror = function (e) {
+				console.error(remoteRequest.statusText);
+				RandomPPModule.RemoteRequestInProgress = false;
+			};
+			remoteRequest.send(null);
+		}
+		catch(exception)
+		{
 			RandomPPModule.RemoteRequestInProgress = false;
-			}
-		};
-		remoteRequest.onerror = function (e) {
-			console.error(remoteRequest.statusText);
-			RandomPPModule.RemoteRequestInProgress = false;
-		};
-		remoteRequest.send(null);
+			console.error(exception.message);
+		}
 	}
 	
+	static bytes2int(x){
+		var val = 0;
+		for (var i = 0; i < x.length; ++i) {        
+			val += x[i];        
+			if (i < x.length-1) {
+				val = val << 8;
+			}
+		}
+		return val;
+	}
+
+	static double2byte(number){
+		var buffer = new ArrayBuffer(8);         			// JS numbers are 8 bytes long, or 64 bits
+		var longNum = new Float64Array(buffer);  			// so equivalent to Float64
+
+		longNum[0] = number;
+
+		return Array.from(new Int8Array(buffer)).reverse(); // reverse to get little endian
+	}
+
 }
 
 Hooks.once('init', () => {
@@ -218,15 +251,27 @@ Hooks.once('ready', () => {
 				RandomPPModule.lastResult = wrapped(...args);
 				return RandomPPModule.lastResult;
 			break;
-			case "remote-anu-single":
-				RandomPPModule.lastResult = RandomPPModule.RequestSingleRNG(wrapped(...args));
+			case "js-math-random":
+				RandomPPModule.lastResult = ((Math.random() * 0xFFFFFFFF) >>> 0);
 				return RandomPPModule.lastResult;
+			break;
+			case "remote-anu-single":
+				const newResult = RandomPPModule.RequestSingleRNG();
+				if(newResult === undefined)
+				{
+					//Fallback to the original method.
+					RandomPPModule.lastResult = wrapped(...args);
+					return RandomPPModule.lastResult;
+				}
+				return RandomPPModule.lastResult = newResult;
 			break;
 			case "remote-anu-bulk":
 				if(RandomPPModule.u32RandomArray.length == 0)
 				{
-					RandomPPModule.RequestRemoteRNGResults(); //Request more
-					RandomPPModule.lastResult = wrapped(...args); //Fallback to original MersenneTwister since there's no more.
+					//Attempt to Request more.
+					RandomPPModule.RequestRemoteRNGResults();
+					//Fallback to the original method.
+					RandomPPModule.lastResult = wrapped(...args); 
 					return RandomPPModule.lastResult;
 				}
 				RandomPPModule.lastResult = RandomPPModule.u32RandomArray.shift() >>> 0;
